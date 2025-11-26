@@ -1,0 +1,17 @@
+# Dependency (Sampah Library)
+node_modules/
+**/node_modules/
+
+# Environment Variables (Rahasia Negara)
+.env
+**/.env
+
+# Build Output (Hasil Compile)
+dist/
+build/
+**/dist/
+**/build/
+
+# Logs & System Files
+*.log
+.DS_Store

@@ -19,13 +19,22 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
 export const createTask = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = (req as any).user.id;
-    const { title } = req.body;
+    // Ambil deadline & reminderDays dari body
+    const { title, description, deadline, reminderDays } = req.body; 
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
     if (!title) { res.status(400).json({ message: "Judul wajib diisi" }); return; }
 
     const newTask = await prisma.task.create({
-      data: { title, imageUrl, authorId: userId }
+      data: { 
+        title, 
+        description: description || "", 
+        imageUrl, 
+        authorId: userId,
+        // Konversi string tanggal ke DateTime object jika ada
+        deadline: deadline ? new Date(deadline) : null,
+        reminderDays: reminderDays ? parseInt(reminderDays) : 1
+      }
     });
     res.status(201).json(newTask);
   } catch (error) { res.status(500).json({ message: "Gagal buat tugas" }); }
@@ -41,16 +50,21 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
 };
 
 // 4. UPDATE STATUS TUGAS (Selesai / Penting) -> INI YANG BARU
+// GANTI BAGIAN updateTask DENGAN INI:
 export const updateTask = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { isCompleted, isImportant } = req.body; 
+    const { isCompleted, isImportant, title, description, deadline, reminderDays } = req.body; 
 
-    // Teknik update pintar: Hanya update data yang dikirim saja
-    // Kalau frontend kirim 'isImportant', maka cuma 'isImportant' yang berubah
     const dataToUpdate: any = {};
     if (isCompleted !== undefined) dataToUpdate.isCompleted = isCompleted;
     if (isImportant !== undefined) dataToUpdate.isImportant = isImportant;
+    if (title !== undefined) dataToUpdate.title = title;
+    if (description !== undefined) dataToUpdate.description = description;
+    
+    // Update Deadline & Reminder
+    if (deadline !== undefined) dataToUpdate.deadline = deadline ? new Date(deadline) : null;
+    if (reminderDays !== undefined) dataToUpdate.reminderDays = parseInt(reminderDays);
 
     const updatedTask = await prisma.task.update({
       where: { id: id },

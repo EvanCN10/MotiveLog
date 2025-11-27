@@ -19,11 +19,15 @@ model User {
 model Task {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
+  description String?  // <--- TAMBAHAN BARU (Boleh kosong/opsional)
   isCompleted Boolean  @default(false)
   isImportant Boolean  @default(false)
+  deadline     DateTime? // Tanggal Deadline
+  reminderDays Int?      @default(1) // Default: Ingatkan H-1
   imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
   authorId    String   @db.ObjectId
   author      User     @relation(fields: [authorId], references: [id])
 }

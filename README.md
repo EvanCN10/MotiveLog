@@ -17,7 +17,7 @@
 - [What's New in v2.0](#-whats-new-in-v20)
 - [Overview](#-overview)
 - [Features](#-features)
-- [Tech Stack](#-tech-stack)
+- [Tech Stack](#️-tech-stack)
 - [Installation](#-installation)
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
@@ -26,10 +26,10 @@
 - [Design System](#-design-system)
 - [API Integration](#-api-integration)
 - [Development](#-development)
-- [Building for Production](#-building-for-production)
+- [Building for Production](#️-building-for-production)
 - [Troubleshooting](#-troubleshooting)
 - [Performance Tips](#-performance-tips)
-- [Version Comparison](#-version-comparison)
+- [Version Comparison](#-version-comparison-v1--v20)
 - [Additional Resources](#-additional-resources)
 - [License](#-license)
 - [Contributing](#-contributing)
@@ -793,6 +793,12 @@ kill -9 <PID>
 - CSS Tricks
 - Dev.to
 - Hashnode
+
+---
+
+## 📝 License
+
+This project is open source and available under the **MIT License**.
 
 ---
 
